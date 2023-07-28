@@ -52,4 +52,9 @@ public class CurrencyExchange {
     public void setConversaionMultiple(BigDecimal conversaionMultiple) {
         this.conversionMultiple = conversaionMultiple;
     }
+
+    @Override
+    public String toString() {
+        return "CurrencyExchange [id=" + id + ", from=" + from + ", to=" + to + ", conversionMultiple=" + conversionMultiple + "]";
+    }
 }
