@@ -7,7 +7,7 @@ public class CurrencyExchange {
     private Long id;
     private String from;
     private String to;
-    private BigDecimal conversaionMultiple;
+    private BigDecimal conversionMultiple;
 
     public CurrencyExchange() {
 
@@ -18,7 +18,7 @@ public class CurrencyExchange {
         this.id = id;
         this.from = from;
         this.to = to;
-        this.conversaionMultiple = conversionMultiple;
+        this.conversionMultiple = conversionMultiple;
     }
 
     public Long getId() {
@@ -46,10 +46,10 @@ public class CurrencyExchange {
     }
 
     public BigDecimal getConversaionMultiple() {
-        return conversaionMultiple;
+        return conversionMultiple;
     }
 
     public void setConversaionMultiple(BigDecimal conversaionMultiple) {
-        this.conversaionMultiple = conversaionMultiple;
+        this.conversionMultiple = conversaionMultiple;
     }
 }
