@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+//@Component
 public class MyFileRouter extends RouteBuilder {
 
     @Autowired
