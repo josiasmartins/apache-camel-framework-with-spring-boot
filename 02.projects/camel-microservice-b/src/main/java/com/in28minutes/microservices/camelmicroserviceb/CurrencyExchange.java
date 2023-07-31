@@ -14,7 +14,7 @@ public class CurrencyExchange {
     }
 
     public CurrencyExchange(Long id, String from, String to, BigDecimal conversionMultiple) {
-        super();
+        //super();
         this.id = id;
         this.from = from;
         this.to = to;
