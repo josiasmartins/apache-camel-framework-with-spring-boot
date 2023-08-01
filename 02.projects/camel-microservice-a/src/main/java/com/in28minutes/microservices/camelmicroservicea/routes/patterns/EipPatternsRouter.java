@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-@Component
+//@Component
 public class EipPatternsRouter extends RouteBuilder {
 
     @Autowired
@@ -63,18 +63,25 @@ public class EipPatternsRouter extends RouteBuilder {
 //                .transform().constant("My Message is Hardcoded")
 //                .routingSlip(simple(routingSlip));
 
+
+
         from("timer:dynamicRouting?period={{timePeriod}}")
                 .transform().constant("My Message is Hardcoded")
                         .dynamicRouter(method(dynamicRouteBean));
 
+        getContext().setTracing(true);
+
+        errorHandler(deadLetterChannel("activemq:dead-letter-queue"));
+
         from("direct:endpoint1")
+                .wireTap("log:wire-tap")
                 .to("{{endpoint-for-logging}}");
 
-//        from("direct:endpoint1")
-//                .to("log:directendpoint2");
-//
-//        from("direct:endpoint1")
-//                .to("log:directendpoint3");
+        from("direct:endpoint1")
+                .to("log:directendpoint2");
+
+        from("direct:endpoint1")
+                .to("log:directendpoint3");
 
 
         // routing slid
