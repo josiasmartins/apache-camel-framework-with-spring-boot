@@ -1,6 +1,8 @@
 package com.in28minutes.microservices.camelmicroservicea.routes.patterns;
 
+import com.in28minutes.microservices.camelmicroserviceb.CurrencyExchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +30,23 @@ public class EipPatternsRouter extends RouteBuilder {
 //                .to("activemq:split-queue");
 
         // message1, message2, messgae3
-        from("file:files/csv")
-                .convertBodyTo(String.class)
-                //.split(body(), ",")
-                .split(method(splitter))
-                .to("activemq:split-queue");
+//        from("file:files/csv")
+//                .convertBodyTo(String.class)
+//                //.split(body(), ",")
+//                .split(method(splitter))
+//                .to("activemq:split-queue");
+
+        // Aggregate
+        // Messages => Aggregate => Endpoint
+        // to, 3
+        from("file:files/aggregate-json")
+                .unmarshal().json(JsonLibrary.Jackson, CurrencyExchange.class)
+                .aggregate(simple("${body.to}"), new ArrayListAggregationStrategy())
+                .completionSize(3)
+                //.completionTimeout(HIGHEST)
+                .to("log:aggregation-json");
+
+
     }
 }
 
