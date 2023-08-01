@@ -46,6 +46,28 @@ public class EipPatternsRouter extends RouteBuilder {
                 //.completionTimeout(HIGHEST)
                 .to("log:aggregation-json");
 
+                String routingSlip = "direct:endpoint1, direct:endpoint2";
+                //String routingSlip = "direct:endpoint1, direct:endpoint2";
+
+        from("timer:routingSlip?period=10000")
+                .transform().constant("My Message is Hardcoded")
+                .routingSlip(simple(routingSlip));
+
+        from("direct:endpoint1")
+                .to("log:directendpoint1");
+
+        from("direct:endpoint1")
+                .to("log:directendpoint2");
+
+        from("direct:endpoint1")
+                .to("log:directendpoint3");
+
+
+        // routing slid
+//                from("timer:multicast?period=10000")
+//                        .multicast()
+//                        .to("log:")
+
 
     }
 }
